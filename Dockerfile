@@ -30,6 +30,10 @@ RUN apk add --no-cache chromium
 RUN yarn cache clean
 COPY . .
 COPY --from=build /usr/src/wpp-server/ /usr/src/wpp-server/
-COPY /tmp/wppconnect-config.ts /usr/src/wpp-server/src/config.ts
+
+# Use environment variable to find the local config file
+ARG LOCAL_CONFIG_FILE=/tmp/wppconnect-config.ts
+COPY ${LOCAL_CONFIG_FILE} /usr/src/wpp-server/src/config.ts
+
 EXPOSE 21465
 ENTRYPOINT ["node", "dist/server.js"]
