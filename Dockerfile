@@ -31,4 +31,4 @@ RUN yarn cache clean
 COPY . .
 COPY --from=build /usr/src/wpp-server/ /usr/src/wpp-server/
 EXPOSE 21465
-ENTRYPOINT ["node", "dist/server.js"]
+ENTRYPOINT ["sh", "-c", "cp /tmp/wppconnect-config.ts /usr/src/wpp-server/src/config.ts && exec node dist/server.js"]
